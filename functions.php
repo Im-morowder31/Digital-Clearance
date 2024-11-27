@@ -271,13 +271,50 @@
         // Close the connection
         closeCon($con);
     }
-    
-    
-    
-    
-    
-    
+
+    function updateLibraryStatus($stud_id, $status) {
+        // Assuming you already have a function to open the connection
+        $con = openCon();
+
+        // Update the student clearance status
+        $sql = "UPDATE student_clearance SET Library = ? WHERE stud_id = ?";
+        $query = $con->prepare($sql);
+        $query->bind_param("is", $status, $stud_id);  // "is" means integer and string parameters
+        $query->execute();
+
+        // Close the connection
+        closeCon($con);
+    }
 
 
+    function getStudentStatus($stud_id, $col_name) {
+        $con = openCon();
+    
+        // Sanitize the column name to avoid SQL injection
+        $valid_columns = ['Library', 'OSA', 'Cashier', 'Student_Council', 'Dean']; // List of valid column names
+        if (!in_array($col_name, $valid_columns)) {
+            closeCon($con);
+            return null;  // If the column name is invalid, return null
+        }
+    
+        // Construct the SQL query with the sanitized column name
+        $sql = "SELECT $col_name FROM student_clearance WHERE stud_id = ?";
+        $stmt = $con->prepare($sql);
+        $stmt->bind_param('s', $stud_id);  // 's' means it's a string
+        $stmt->execute();
+        $result = $stmt->get_result();
+    
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $status = $row[$col_name];  // Get the value of the specified column
+        } else {
+            $status = null;
+        }
+    
+        closeCon($con);
+    
+        return $status;
+    }
+    
 
 ?>

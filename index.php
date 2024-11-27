@@ -39,7 +39,7 @@
     addStudentUser($studentID, $password, $name);*/
 
 
-    
+
     if (isset($_POST['loginButton'])) { 
         $idNumber = htmlspecialchars(stripslashes(trim($_POST['userID'])));
         $password = htmlspecialchars(stripslashes(trim($_POST['password'])));
@@ -74,7 +74,6 @@
         }   
     }
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
