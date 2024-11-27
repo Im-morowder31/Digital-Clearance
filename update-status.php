@@ -4,8 +4,9 @@
 
     $stud_id = isset($_GET['stud_id']) ? $_GET['stud_id'] : '';
     $student = getStudentDetails($stud_id);
-
     $currentStatus = getStudentStatus($stud_id, 'Library');
+
+    $deptName = isset($_GET['deptName']) ? $_GET['deptName'] : '';
 
     $status = '';
 
@@ -16,7 +17,7 @@
         } elseif ($status === 'Decline') {
             updateLibraryStatus($stud_id, 0);
         }
-        header("Location: student-list.php");
+        header("Location: student-list.php?deptName=" . urlencode($deptName));
         exit();
     }
 
@@ -45,7 +46,7 @@
         <div aria-label="breadcrumb">
             <ol class="breadcrumb mt-2">
                 <li class="breadcrumb-item"><a href="dashboard-faculty.php">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="student-list.php">Student List</a></li>
+                <li class="breadcrumb-item"><a href="student-list.php?deptName=<?php echo urlencode($deptName); ?>">Student List</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Update Status</li>
             </ol>
         </div>
@@ -83,7 +84,8 @@
                 <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
                 </div>
                 <div class="pb-3 ps-3">
-                    <a href="student-list.php" class="btn btn-secondary btn-lg">Cancel</a>
+                    <!-- Dynamically pass the deptName to the Cancel URL -->
+                    <a href="student-list.php?deptName=<?php echo urlencode($deptName); ?>" class="btn btn-secondary btn-lg">Cancel</a>
                     <button type="submit" name="updateButton" class="btn btn-success btn-lg">Update</button>
                 </div>
             </form>

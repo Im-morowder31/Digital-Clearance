@@ -290,38 +290,67 @@
     function fetchStudentsByCourses($courses) {
         // Open the connection
         $con = openCon();
+        
+        // If no courses are provided, return an empty array or skip the query
+        if (empty($courses)) {
+            // For debugging: log or output when courses are empty
+            error_log("No courses selected.");
+            return [];
+        }
     
+        // Sanitize the input courses to prevent SQL injection
+        $coursesEscaped = array_map(function($course) use ($con) {
+            return "'" . $con->real_escape_string($course) . "'";
+        }, $courses);
+    
+        // Join the sanitized courses to create the "IN" condition
+        $coursesList = implode(",", $coursesEscaped);
+        
         // Create the SQL query to fetch students based on the selected courses
-        $placeholders = implode(",", array_fill(0, count($courses), "?"));
         $sql = "SELECT si.stud_id, su.name, si.Section, si.Course, sc.Library
                 FROM student_info si
                 LEFT JOIN student_clearance sc ON si.stud_id = sc.stud_id
                 LEFT JOIN student_users su ON si.stud_id = su.stud_id
-                WHERE si.Course IN ($placeholders)";
+                WHERE si.Course IN ($coursesList)";
     
-        // Prepare the statement
-        $stmt = $con->prepare($sql);
+        // For debugging: log the SQL query to check its correctness
+        error_log("SQL Query: " . $sql);
     
-        // Bind the parameters dynamically
-        $types = str_repeat("s", count($courses)); // assuming all courses are strings
-        $stmt->bind_param($types, ...$courses);
+        // Prepare and execute the query
+        if ($stmt = $con->prepare($sql)) {
+            $stmt->execute();
+            $result = $stmt->get_result();
     
-        // Execute the query
-        $stmt->execute();
-        $result = $stmt->get_result();
+            // Check if the result set is empty
+            if ($result->num_rows > 0) {
+                // Fetch all students in an associative array
+                $students = [];
+                while ($row = $result->fetch_assoc()) {
+                    $students[] = $row;
+                }
+            } else {
+                // For debugging: log if no students are found
+                error_log("No students found for the selected courses.");
+                $students = []; // No students found for the selected courses
+            }
     
-        // Fetch the results
-        $students = [];
-        while ($row = $result->fetch_assoc()) {
-            $students[] = $row;
+            // Close the statement
+            $stmt->close();
+        } else {
+            // If the prepare statement fails, return an empty array or log error
+            $students = [];
+            error_log("Error preparing statement: " . $con->error);
         }
     
         // Close the connection
-        $stmt->close();
         closeCon($con);
     
+        // Return the list of students
         return $students;
     }
+    
+    
+    
     
     
 
