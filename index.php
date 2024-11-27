@@ -6,7 +6,40 @@
     $password = "";
     $errorArray = [];
 
+    /*// Example student data to be inserted
+    $studentID = '200890563';
+    $lrn = '101002563862';
+    $sex = 'Male';
+    $civilStatus = 'Single';
+    $dob = 'October 15, 2004';
+    $pob = 'Mabalacat, Pampanga';
+    $religion = 'Christian';
+    $nationality = 'Filipino';
+    $address = 'Blk 75 lot 18 brgy VDR Dapdap, Bamban, Tarlac';
+    $contactNo = '09123456789';
+    $course = 'BSIT';
+    $section = '3A';
 
+    // Insert into student_info table
+    insertStudentInfo($studentID, $lrn, $sex, $civilStatus, $dob, $pob, $religion, $nationality, $address, $contactNo, $course, $section);
+
+    // Insert into student_clearance table
+    $library = 0;
+    $osa = 0;
+    $cashier = 0;
+    $studentCouncil = 0;
+    $dean = 0;
+
+    addStudentClearance($studentID, $library, $osa, $cashier, $studentCouncil, $dean);
+
+    // Insert into student_users table
+    $password = 'John Doe';
+    $name = 'John Doe';
+
+    addStudentUser($studentID, $password, $name);*/
+
+
+    
     if (isset($_POST['loginButton'])) { 
         $idNumber = htmlspecialchars(stripslashes(trim($_POST['userID'])));
         $password = htmlspecialchars(stripslashes(trim($_POST['password'])));

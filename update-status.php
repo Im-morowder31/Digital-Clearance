@@ -1,3 +1,15 @@
+<?php 
+
+    include 'functions.php'; 
+
+    // Get the stud_id from the URL
+    $stud_id = isset($_GET['stud_id']) ? $_GET['stud_id'] : '';
+
+    // Call the function to fetch student details
+    $student = getStudentDetails($stud_id);
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -34,10 +46,10 @@
         </div>
         <div>
             <ul class="mt-2 fw-bold">
-                <li>2009998885</li>
-                <li>Shane Kian Castillo</li>
-                <LI>3A</LI>
-                <li>BSIT</li>
+                <li><?php echo $student['stud_id']; ?></li>
+                <li><?php echo $student['name']; ?></li>
+                <LI><?php echo $student['Section']; ?></LI>
+                <li><?php echo $student['Course']; ?></li>
             </ul>
         </div>
         <div>
@@ -59,7 +71,7 @@
                 <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
                 </div>
                 <div class="pb-3 ps-3">
-                    <button type="cancel" class="btn btn-secondary btn-lg">Cancel</button>
+                    <a href="student-list.php" class="btn btn-secondary btn-lg">Cancel</a>
                     <button type="submit" class="btn btn-success btn-lg">Update</button>
                 </div>
             </form>
