@@ -1,3 +1,27 @@
+<?php 
+
+    include 'functions.php'; 
+
+    $stud_id = isset($_GET['stud_id']) ? $_GET['stud_id'] : '';
+    $student = getStudentDetails($stud_id);
+
+    $currentStatus = getStudentStatus($stud_id, 'Library');
+
+    $status = '';
+
+    if (isset($_POST['updateButton'])) {
+        $status = isset($_POST['radStatus']) ? $_POST['radStatus'] : '';
+        if ($status === 'Approve') {
+            updateLibraryStatus($stud_id, 1);
+        } elseif ($status === 'Decline') {
+            updateLibraryStatus($stud_id, 0);
+        }
+        header("Location: student-list.php");
+        exit();
+    }
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,7 +38,6 @@
             <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-10 text-white " href="#">Update Status</a>
         </div>
     </header>
-
     <nav class="container mt-4">
         <div class="nav-title">
             Update Student Status
@@ -27,29 +50,30 @@
             </ol>
         </div>
     </nav>
-
     <div class="container border border-primary-subtle border-opacity-10 rounded">
         <div class="fs-5 p-2">
             Selected Student
         </div>
         <div>
             <ul class="mt-2 fw-bold">
-                <li>2009998885</li>
-                <li>Shane Kian Castillo</li>
-                <LI>3A</LI>
-                <li>BSIT</li>
+                <li><?php echo $student['stud_id']; ?></li>
+                <li><?php echo $student['name']; ?></li>
+                <LI><?php echo $student['Section']; ?></LI>
+                <li><?php echo $student['Course']; ?></li>
             </ul>
         </div>
         <div>
-            <form action="" class="">
+            <form method="post" class="">
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                    <input class="form-check-input" type="radio" name="radStatus" value="Approve" id="flexRadioDefault1" 
+                    <?php if ($currentStatus == 1) echo 'checked'; ?>>
                     <label class="form-check-label text-success" for="flexRadioDefault1">
                         Approve
                     </label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                    <input class="form-check-input" type="radio" name="radStatus" value="Decline" id="flexRadioDefault1" 
+                    <?php if ($currentStatus == 0) echo 'checked'; ?>>
                     <label class="form-check-label text-danger" for="flexRadioDefault1">
                         Decline
                     </label>
@@ -59,17 +83,12 @@
                 <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
                 </div>
                 <div class="pb-3 ps-3">
-                    <button type="cancel" class="btn btn-secondary btn-lg">Cancel</button>
-                    <button type="submit" class="btn btn-success btn-lg">Update</button>
+                    <a href="student-list.php" class="btn btn-secondary btn-lg">Cancel</a>
+                    <button type="submit" name="updateButton" class="btn btn-success btn-lg">Update</button>
                 </div>
             </form>
         </div>
     </div>
-
-
-
-
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

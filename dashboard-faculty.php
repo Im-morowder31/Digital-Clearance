@@ -27,82 +27,81 @@
             <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-10 text-white " href="#"><?php echo $_SESSION['user_name'] . " - Dashboard"; ?></a>
         </div>
     </header>
-         <main>
+    <main>
         <div class="container mt-5 text-center">
             <div class="row g-5 justify-content-center">
                 <div class="col-4">
-                <a href="student-list.php" class="text-decoration-none">
-                    <div class="ccis">                       
-                        <img src="images/ccis.png" alt="" height="80px">                                           
-                        <p>COLLEGE OF COMPUTING AND INFORMATION SCIENCES</p>
-                    </div>
-                </a>  
+                    <a href="student-list.php?deptName=COLLEGE OF COMPUTING AND INFORMATION SCIENCES" class="text-decoration-none">
+                        <div class="ccis">                       
+                            <img src="images/ccis.png" alt="" height="80px">                                           
+                            <p>COLLEGE OF COMPUTING AND INFORMATION SCIENCES</p>
+                        </div>
+                    </a>  
                 </div>
                 <div class="col-4">
-                <a href="student-list.php" class="text-decoration-none">
-                    <div class="crim">
-                        <img src="images/CRIM.png" alt="" height="80px">                                             
-                        <p>COLLEGE OF CRIMINOLOGY</p>
-                    </div>
-                </a>    
+                    <a href="student-list.php?deptName=COLLEGE OF CRIMINOLOGY" class="text-decoration-none">
+                        <div class="crim">
+                            <img src="images/CRIM.png" alt="" height="80px">                                             
+                            <p>COLLEGE OF CRIMINOLOGY</p>
+                        </div>
+                    </a>    
                 </div>
                 <div class="col-4">
-                <a href="student-list.php" class="text-decoration-none">
-                    <div class="nursing">
-                        <img src="images/NURSING.png" alt="" height="80px">                                              
-                        <p>COLLEGE OF NURSING</p>
-                    </div>
-                </a>    
+                    <a href="student-list.php?deptName=COLLEGE OF NURSING" class="text-decoration-none">
+                        <div class="nursing">
+                            <img src="images/NURSING.png" alt="" height="80px">                                              
+                            <p>COLLEGE OF NURSING</p>
+                        </div>
+                    </a>    
                 </div>
                 <div class="col-4">
-                <a href="student-list.php" class="text-decoration-none">
-                    <div class="educ">
-                        <img src="images/EDUC.png" alt="" height="80px">                       
-                        <p>COLLEGE OF EDUCATION</p>
-                    </div>
-                </a>
+                    <a href="student-list.php?deptName=COLLEGE OF EDUCATION" class="text-decoration-none">
+                        <div class="educ">
+                            <img src="images/EDUC.png" alt="" height="80px">                       
+                            <p>COLLEGE OF EDUCATION</p>
+                        </div>
+                    </a>
                 </div>
                 <div class="col-4">
-                <a href="student-list.php" class="text-decoration-none">
-                    <div class="engr">
-                        <img src="images/ENGR.png" alt="" height="80px">                        
-                        <p>COLLEGE OF ENGINEERING</p>
-                    </div>
-                </a>
+                    <a href="student-list.php?deptName=COLLEGE OF ENGINEERING" class="text-decoration-none">
+                        <div class="engr">
+                            <img src="images/ENGR.png" alt="" height="80px">                        
+                            <p>COLLEGE OF ENGINEERING</p>
+                        </div>
+                    </a>
                 </div>
                 <div class="col-4">
-                <a href="student-list.php" class="text-decoration-none">
-                    <div class="buss">
-                        <img src="images/BUSS.png" alt="" height="80px">                        
-                        <p>COLLEGE OF BUSINESS</p>
-                    </div>
-                </a>
-                </div>
-                
-                <div class="col-4">
-                <a href="student-list.php" class="text-decoration-none">
-                    <div class="hos">
-                        <img src="images/HOSPI.png" alt="" height="80px">                        
-                        <p>COLLEGE OF HOSPITALITY MANAGEMENT</p>
-                    </div>
-                </a>
+                    <a href="student-list.php?deptName=COLLEGE OF BUSINESS" class="text-decoration-none">
+                        <div class="buss">
+                            <img src="images/BUSS.png" alt="" height="80px">                        
+                            <p>COLLEGE OF BUSINESS</p>
+                        </div>
+                    </a>
                 </div>
                 <div class="col-4">
-                <a href="student-list.php" class="text-decoration-none">
-                    <div class="cass">                        
-                        <img src="images/SOCART.png" alt="" height="80px">                        
-                        <p>COLLEGE OF ARTS AND SOCIAL SCIENCES</p>
-                    </div>
-                </a>
+                    <a href="student-list.php?deptName=COLLEGE OF HOSPITALITY MANAGEMENT" class="text-decoration-none">
+                        <div class="hos">
+                            <img src="images/HOSPI.png" alt="" height="80px">                        
+                            <p>COLLEGE OF HOSPITALITY MANAGEMENT</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-4">
+                    <a href="student-list.php?deptName=COLLEGE OF ARTS AND SOCIAL SCIENCES" class="text-decoration-none">
+                        <div class="cass">                        
+                            <img src="images/SOCART.png" alt="" height="80px">                        
+                            <p>COLLEGE OF ARTS AND SOCIAL SCIENCES</p>
+                        </div>
+                    </a>
                 </div> 
             </div>
-        </div>
-     </main>
-     <br>
-     <br>
-     <br>
-     <br>
-     <hr>
+        </div>  
+    </main>
+    <br>
+    <br>
+    <br>
+    <br>
+    <hr>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
