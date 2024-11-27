@@ -98,7 +98,6 @@
         return $output;
     }
 
-    // Function to get user name from faculty_users
     function getFacultyUserNameById($idNumber) {
         $con = openCon();
         $query = "SELECT name FROM faculty_users WHERE dept_id = '$idNumber'";
@@ -114,7 +113,6 @@
         return null; // Return null if no name is found
     }
 
-    // Function to get user name from student_users
     function getStudentUserNameById($idNumber) {
         $con = openCon();
         $query = "SELECT name FROM student_users WHERE stud_id = '$idNumber'";  
@@ -128,6 +126,18 @@
 
         closeCon($con);
         return null; // Return null if no name is found
+    }
+
+    function getCollegeAbbreviation($deptName) {
+        $ignoreWords = ['of', 'and'];
+        $words = explode(' ', $deptName);
+        $abbreviation = '';
+        foreach ($words as $word) {
+            if (!in_array(strtolower($word), $ignoreWords)) {
+                $abbreviation .= strtoupper($word[0]);
+            }
+        }
+        return $abbreviation;
     }
 
 
