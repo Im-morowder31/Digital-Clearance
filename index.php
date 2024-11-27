@@ -1,34 +1,47 @@
 <?php 
-   
-    include 'functions.php'; // Include your functions file
 
-    $idNumber = ""; // Initialize variables
+    include 'functions.php'; 
+
+    $idNumber = "";
     $password = "";
     $errorArray = [];
 
-    if (isset($_POST['loginButton'])) { // Check if login button is pressed
-        // Sanitize and get input values
+
+    if (isset($_POST['loginButton'])) { 
         $idNumber = htmlspecialchars(stripslashes(trim($_POST['userID'])));
         $password = htmlspecialchars(stripslashes(trim($_POST['password'])));
         $type = $_POST['radUser'];
 
-        if ($type === 'Faculty') {
+        $errorArray = validateLoginCredentials($idNumber, $password, $type);
 
-            // Validate Faculty login credentials
-            $errorArray = validateLoginCredentials($idNumber, $password);
+        if (empty($errorArray)) {
+            $_SESSION['idNumber'] = $idNumber;
+            $_SESSION['user_type'] = $type;
 
-            // If no errors, start session and redirect to faculty dashboard
-            if (empty($errorArray)) {
-                session_start();
-                $_SESSION['idNumber'] = $idNumber; // Store the user ID in the session
-                header('Location: dashboard-faculty.php'); // Redirect to the faculty dashboard
-                exit();
+            if ($type === 'Faculty') {
+                $facultyName = getFacultyUserNameById($idNumber); 
+                if ($facultyName) {
+                    $_SESSION['user_name'] = $facultyName; 
+                } else {
+                    $_SESSION['user_name'] = 'Unknown Faculty'; 
+                }
+                header('Location: dashboard-faculty.php'); // Redirect to faculty dashboard
+
+            } 
+
+            elseif ($type === 'Student') {
+                $studentName = getStudentUserNameById($idNumber); 
+                if ($studentName) {
+                    $_SESSION['user_name'] = $studentName; 
+                } else {
+                    $_SESSION['user_name'] = 'Unknown Student'; 
+                }
+                header('Location: dashboard-student.php'); 
             }
-
-        }
-        
+        }   
     }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -71,7 +84,6 @@
                 <div class="login-select">
                     <p>Login as: </p>
                     <div class="radio">
-                        <!-- Set the 'checked' attribute based on the previous selection -->
                         <input type="radio" id="Student" name="radUser" value="Student" <?php echo (isset($_POST['radUser']) && $_POST['radUser'] == 'Student') ? 'checked' : ''; ?> checked>
                         <label for="Student">Student</label>
                         <input type="radio" id="Faculty" name="radUser" value="Faculty" <?php echo (isset($_POST['radUser']) && $_POST['radUser'] == 'Faculty') ? 'checked' : ''; ?>>
@@ -79,12 +91,10 @@
                     </div>
                 </div>
                 </div>
-                <!-- Login Button -->
                 <button type="submit" name="loginButton">Login</button>
             </form>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    
 </body>
 </html>
