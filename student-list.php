@@ -4,6 +4,7 @@
     $headerTitle = 'Student List';
     $deptName = isset($_GET['deptName']) ? $_GET['deptName'] : 'Unknown Department';
     $pageTitle = "Students - " . getCollegeAbbreviation($deptName);
+    $deptAccount = $_SESSION['user_name'];
 
     $deptCourses = [
         'COLLEGE OF COMPUTING AND INFORMATION SCIENCES' => ['BSCS', 'BSIT', 'BSIS', 'BSEMC'],
@@ -20,7 +21,7 @@
     $courses = isset($deptCourses[$deptName]) ? $deptCourses[$deptName] : [];
 
     // Fetch students based on the selected department courses
-    $students = fetchStudentsByCourses($courses);
+    $students = fetchStudentsByCourses($courses, $deptAccount);
 
 ?>
 <!DOCTYPE html>
@@ -74,8 +75,8 @@
                         <th><?php echo $student['name']; ?></th>
                         <th><?php echo $student['Section']; ?></th>
                         <th><?php echo $student['Course']; ?></th>
-                        <th class="<?php echo ($student['Library'] == 1) ? 'text-success' : 'text-danger'; ?>">
-                            <?php echo ($student['Library'] == 1) ? 'Approved' : 'Declined'; ?>
+                        <th class="<?php echo ($student[$_SESSION['user_name']] == 1) ? 'text-success' : 'text-danger'; ?>">
+                            <?php echo ($student[$_SESSION['user_name']] == 1) ? 'Approved' : 'Declined'; ?>
                         </th>
                         <th>
                         <a href="update-status.php?stud_id=<?php echo $student['stud_id']; ?>&deptName=<?php echo urlencode($deptName); ?>" class="btn btn-outline-info">
