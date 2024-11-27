@@ -2,9 +2,11 @@
 
     include 'functions.php'; 
 
+    $deptAccount = $_SESSION['user_name'];
+
     $stud_id = isset($_GET['stud_id']) ? $_GET['stud_id'] : '';
     $student = getStudentDetails($stud_id);
-    $currentStatus = getStudentStatus($stud_id, 'Library');
+    $currentStatus = getStudentStatus($stud_id, $deptAccount);
 
     $deptName = isset($_GET['deptName']) ? $_GET['deptName'] : '';
 
@@ -13,9 +15,9 @@
     if (isset($_POST['updateButton'])) {
         $status = isset($_POST['radStatus']) ? $_POST['radStatus'] : '';
         if ($status === 'Approve') {
-            updateLibraryStatus($stud_id, 1);
+            updateClearanceStatus($stud_id, 1, $deptAccount);
         } elseif ($status === 'Decline') {
-            updateLibraryStatus($stud_id, 0);
+            updateClearanceStatus($stud_id, 0, $deptAccount);
         }
         header("Location: student-list.php?deptName=" . urlencode($deptName));
         exit();

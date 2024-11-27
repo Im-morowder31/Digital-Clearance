@@ -156,8 +156,6 @@
         // Close the connection
         closeCon($con); // Assumes a function `closeCon()` for closing the connection
     }
-    
-    
 
     function addStudentUser($studentID, $password, $name) {
         $con = openCon(); // Assumes a function `openCon()` for database connection
@@ -243,12 +241,12 @@
         closeCon($con);
     }
 
-    function updateLibraryStatus($stud_id, $status) {
+    function updateClearanceStatus($stud_id, $status, $column) {
         // Assuming you already have a function to open the connection
         $con = openCon();
 
         // Update the student clearance status
-        $sql = "UPDATE student_clearance SET Library = ? WHERE stud_id = ?";
+        $sql = "UPDATE student_clearance SET $column = ? WHERE stud_id = ?";
         $query = $con->prepare($sql);
         $query->bind_param("is", $status, $stud_id);  // "is" means integer and string parameters
         $query->execute();
@@ -287,33 +285,28 @@
         return $status;
     }
 
-    function fetchStudentsByCourses($courses) {
-        // Open the connection
+    function fetchStudentsByCourses($courses, $column) {
         $con = openCon();
-        
-        // If no courses are provided, return an empty array or skip the query
+    
+        // If no courses are selected, return an empty array
         if (empty($courses)) {
-            // For debugging: log or output when courses are empty
             error_log("No courses selected.");
             return [];
         }
     
-        // Sanitize the input courses to prevent SQL injection
+        // Escape course names to prevent SQL injection
         $coursesEscaped = array_map(function($course) use ($con) {
             return "'" . $con->real_escape_string($course) . "'";
         }, $courses);
-    
-        // Join the sanitized courses to create the "IN" condition
         $coursesList = implode(",", $coursesEscaped);
-        
-        // Create the SQL query to fetch students based on the selected courses
-        $sql = "SELECT si.stud_id, su.name, si.Section, si.Course, sc.Library
+    
+        // Build the SQL query dynamically to select the clearance field
+        $sql = "SELECT si.stud_id, su.name, si.Section, si.Course, sc.$column
                 FROM student_info si
                 LEFT JOIN student_clearance sc ON si.stud_id = sc.stud_id
                 LEFT JOIN student_users su ON si.stud_id = su.stud_id
                 WHERE si.Course IN ($coursesList)";
     
-        // For debugging: log the SQL query to check its correctness
         error_log("SQL Query: " . $sql);
     
         // Prepare and execute the query
@@ -321,37 +314,24 @@
             $stmt->execute();
             $result = $stmt->get_result();
     
-            // Check if the result set is empty
             if ($result->num_rows > 0) {
-                // Fetch all students in an associative array
                 $students = [];
                 while ($row = $result->fetch_assoc()) {
                     $students[] = $row;
                 }
             } else {
-                // For debugging: log if no students are found
                 error_log("No students found for the selected courses.");
-                $students = []; // No students found for the selected courses
+                $students = [];
             }
     
-            // Close the statement
             $stmt->close();
         } else {
-            // If the prepare statement fails, return an empty array or log error
             $students = [];
             error_log("Error preparing statement: " . $con->error);
         }
     
-        // Close the connection
         closeCon($con);
-    
-        // Return the list of students
         return $students;
-    }
-    
-    
-    
-    
-    
+    }   
 
 ?>
