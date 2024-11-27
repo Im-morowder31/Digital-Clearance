@@ -5,7 +5,22 @@
     $deptName = isset($_GET['deptName']) ? $_GET['deptName'] : 'Unknown Department';
     $pageTitle = "Students - " . getCollegeAbbreviation($deptName);
 
-    $students = fetchBSITStudents();
+    $deptCourses = [
+        'COLLEGE OF COMPUTING AND INFORMATION SCIENCES' => ['BSCS', 'BSIT', 'BSIS', 'BSEMC'],
+        'COLLEGE OF CRIMINOLOGY' => ['BSCRIM'],
+        'COLLEGE OF NURSING' => ['BSN'],
+        'COLLEGE OF EDUCATION' => ['BSPE'],
+        'COLLEGE OF ENGINEERING' => ['BSCoE', 'BSECE'],
+        'COLLEGE OF BUSINESS' => ['BSBA', 'BSA', 'BSCA', 'BSRES'],
+        'COLLEGE OF HOSPITALITY MANAGEMENT' => ['BST', 'BSHM'],
+        'COLLEGE OF ARTS AND SOCIAL SCIENCES' => ['BeEd', 'BSEd', 'BAC', 'BSSW']
+    ];
+
+    // Get the courses for the selected department
+    $courses = isset($deptCourses[$deptName]) ? $deptCourses[$deptName] : [];
+
+    // Fetch students based on the selected department courses
+    $students = fetchStudentsByCourses($courses);
 
 ?>
 <!DOCTYPE html>
@@ -34,7 +49,6 @@
             <?php echo $deptName ?>
         </div>
     </nav>
-
     <table class="table table-striped text-center">
         <thead>
             <tr class="table-dark">
@@ -47,22 +61,30 @@
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($students as $student): ?>
+            <?php if (empty($students)): ?>
                 <tr>
-                    <th><?php echo $student['stud_id']; ?></th>
-                    <th><?php echo $student['name']; ?></th>
-                    <th><?php echo $student['Section']; ?></th>
-                    <th><?php echo $student['Course']; ?></th>
-                    <th class="<?php echo ($student['Library'] == 1) ? 'text-success' : 'text-danger'; ?>">
-                        <?php echo ($student['Library'] == 1) ? 'Approved' : 'Declined'; ?>
-                    </th>
-                    <th>
-                        <a href="update-status.php?stud_id=<?php echo $student['stud_id']; ?>" class="btn btn-outline-info">
-                            Update Status
-                        </a>
-                    </th>
+                    <td colspan="6" class="text-center">
+                        No students found for this department.
+                    </td>
                 </tr>
-            <?php endforeach; ?>
+            <?php else: ?>
+                <?php foreach ($students as $student): ?>
+                    <tr>
+                        <th><?php echo $student['stud_id']; ?></th>
+                        <th><?php echo $student['name']; ?></th>
+                        <th><?php echo $student['Section']; ?></th>
+                        <th><?php echo $student['Course']; ?></th>
+                        <th class="<?php echo ($student['Library'] == 1) ? 'text-success' : 'text-danger'; ?>">
+                            <?php echo ($student['Library'] == 1) ? 'Approved' : 'Declined'; ?>
+                        </th>
+                        <th>
+                            <a href="update-status.php?stud_id=<?php echo $student['stud_id']; ?>" class="btn btn-outline-info">
+                                Update Status
+                            </a>
+                        </th>
+                    </tr>
+                <?php endforeach; ?>
+            <?php endif; ?>
         </tbody>
     </table>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

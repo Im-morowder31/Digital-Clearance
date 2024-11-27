@@ -214,35 +214,6 @@
         closeCon($con);
     }
 
-    function fetchBSITStudents() {
-        // Open the connection
-        $con = openCon();
-    
-        // Query to fetch students in the BSIT course and their clearance status,
-        // along with their name from the student_users table
-        $sql = "SELECT si.stud_id, su.name, si.Section, si.Course, sc.Library
-                FROM student_info si
-                LEFT JOIN student_clearance sc ON si.stud_id = sc.stud_id
-                LEFT JOIN student_users su ON si.stud_id = su.stud_id
-                WHERE si.Course = 'BSIT'";
-    
-        // Execute the query
-        $result = $con->query($sql);
-    
-        // Create an array to hold the results
-        $students = [];
-    
-        // Fetch all students and store them in the $students array
-        while ($row = $result->fetch_assoc()) {
-            $students[] = $row;
-        }
-    
-        // Close the connection
-        closeCon($con);
-    
-        return $students;
-    }
-
     // Function to fetch student details by stud_id
     function getStudentDetails($stud_id) {
         // Open the connection
@@ -315,6 +286,43 @@
     
         return $status;
     }
+
+    function fetchStudentsByCourses($courses) {
+        // Open the connection
+        $con = openCon();
+    
+        // Create the SQL query to fetch students based on the selected courses
+        $placeholders = implode(",", array_fill(0, count($courses), "?"));
+        $sql = "SELECT si.stud_id, su.name, si.Section, si.Course, sc.Library
+                FROM student_info si
+                LEFT JOIN student_clearance sc ON si.stud_id = sc.stud_id
+                LEFT JOIN student_users su ON si.stud_id = su.stud_id
+                WHERE si.Course IN ($placeholders)";
+    
+        // Prepare the statement
+        $stmt = $con->prepare($sql);
+    
+        // Bind the parameters dynamically
+        $types = str_repeat("s", count($courses)); // assuming all courses are strings
+        $stmt->bind_param($types, ...$courses);
+    
+        // Execute the query
+        $stmt->execute();
+        $result = $stmt->get_result();
+    
+        // Fetch the results
+        $students = [];
+        while ($row = $result->fetch_assoc()) {
+            $students[] = $row;
+        }
+    
+        // Close the connection
+        $stmt->close();
+        closeCon($con);
+    
+        return $students;
+    }
+    
     
 
 ?>
