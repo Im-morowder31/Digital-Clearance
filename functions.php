@@ -20,58 +20,66 @@
         return mysqli_close($con);
     }
 
-    function addUser() {
+    function addStudentUser() {
         $con = openCon();
         if ($con) {
-            $email = 'user2@gmail.com';
-            $hashedPassword = md5('password'); 
-            $name = 'user2';
-            $sql = "INSERT INTO users (email, password, name) VALUES ('$email', '$hashedPassword', '$name')";
+            $studentID = '0121302381'; // Example student ID
+            $hashedPassword = md5('Nucum0121302381'); // Example password, securely hashed
+            $name = 'Karl John L. Nucum'; // Example name
+    
+            $sql = "INSERT INTO student_users (stud_id, password, name) VALUES ('$studentID', '$hashedPassword', '$name')";
+    
             if (mysqli_query($con, $sql)) {
-                echo "New record created successfully";
+                //echo "New student record created successfully";
             } else {
                 echo "Error: " . $sql . "<br>" . mysqli_error($con);
             }
+    
             closeCon($con);
         } else {
             echo "Failed to connect to the database.";
         }
     }
 
-    function getFacultyUsers() {
-        $con = openCon();       
-        $sql = "SELECT dept_id, password FROM faculty_users";
-        $result = mysqli_query($con, $sql);    
-        $users = [];   
+    function getUsersByTable($tableName, $idColumn) {
+        $con = openCon();
+        $sql = "SELECT $idColumn, password FROM $tableName";
+        $result = mysqli_query($con, $sql);
+        $users = [];
         if (mysqli_num_rows($result) > 0) {
             while ($row = mysqli_fetch_assoc($result)) {
-                $users[$row['dept_id']] = $row['password'];
+                $users[$row[$idColumn]] = $row['password'];
             }
-        }    
-        closeCon($con);     
+        }
+        closeCon($con);
         return $users;
     }
 
-    function checkLoginCredentialsFaculty($id, $password, $users) {
-        return isset($users[$id]) && $users[$id] === md5($password);  
-    }
-
-    function validateLoginCredentials($id, $password) {
+    function validateLoginCredentials($id, $password, $type) {
         $errorArray = [];
-        $users = getFacultyUsers();  
+        $users = [];
+    
+        if ($type === 'Faculty') {
+            $users = getUsersByTable('faculty_users', 'dept_id');
+        } elseif ($type === 'Student') {
+            $users = getUsersByTable('student_users', 'stud_id');
+        }
+    
         if (empty($id)) {
-            $errorArray['email'] = 'ID is required!';
-        } 
+            $errorArray['id'] = 'ID is required!';
+        }
         if (empty($password)) {
             $errorArray['password'] = 'Password is required!';
         }
         if (empty($errorArray)) {
-            if (!checkLoginCredentialsFaculty($id, $password, $users)) {
+            if (!isset($users[$id]) || $users[$id] !== md5($password)) {
                 $errorArray['credentials'] = 'Incorrect ID or password!';
             }
-        } 
+        }
+    
         return $errorArray;
     }
+    
 
     function displayErrors($errors) {
         if (empty($errors)) {
@@ -90,6 +98,38 @@
         return $output;
     }
 
+    // Function to get user name from faculty_users
+    function getFacultyUserNameById($idNumber) {
+        $con = openCon();
+        $query = "SELECT name FROM faculty_users WHERE dept_id = '$idNumber'";
+        $result = mysqli_query($con, $query);
 
-    
+        if ($result && mysqli_num_rows($result) > 0) {
+            $row = mysqli_fetch_assoc($result);
+            closeCon($con);
+            return $row['name']; // Return the name if found
+        }
+
+        closeCon($con);
+        return null; // Return null if no name is found
+    }
+
+    // Function to get user name from student_users
+    function getStudentUserNameById($idNumber) {
+        $con = openCon();
+        $query = "SELECT name FROM student_users WHERE stud_id = '$idNumber'";  
+        $result = mysqli_query($con, $query);
+
+        if ($result && mysqli_num_rows($result) > 0) {
+            $row = mysqli_fetch_assoc($result);
+            closeCon($con);
+            return $row['name']; // Return the name if found
+        }
+
+        closeCon($con);
+        return null; // Return null if no name is found
+    }
+
+
+
 ?>
