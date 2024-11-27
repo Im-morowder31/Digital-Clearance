@@ -1,0 +1,20 @@
+*{
+    font-family: Roboto,sans-serif;
+}
+
+header{
+    height: 100px;
+}
+
+nav{
+    font-size: 20px !important;
+    display: flex !important;
+
+}
+
+.nav-title {
+    font-size: 30px;
+    margin-left: 20% !important;
+    font-weight: bold;
+}
+

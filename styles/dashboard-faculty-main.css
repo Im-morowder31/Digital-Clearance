@@ -1,0 +1,154 @@
+*{
+    font-family: Roboto,sans-serif;
+}
+header{
+    height: 100px;
+}
+
+.container{
+    margin-top: 150px !important;
+}
+.ccis{
+    width: 100%;
+    height: 150px;
+    background-color: #98A04D;
+    display: flex;
+    padding: 10px;
+    align-items: center;
+    
+    text-align: center;
+    box-shadow: 0 3px 0 #63673C ;
+    border-radius: 1px;
+    color: white;
+    font-weight: 500;
+}
+.ccis img{
+    padding-left: 10px;
+}
+
+.crim{
+    width: 100%;
+    height: 150px;
+    background-color: #96643C;
+    display: flex;
+    padding: 10px;
+    align-items: center;
+    gap: 10px;
+    text-align: center;
+    box-shadow: 0 3px 0 #785335 ;
+    border-radius: 1px;
+    color: white;
+    font-weight: 500;
+}
+.crim img{
+    padding-left: 10px;
+}
+
+.nursing{
+    width: 100%;
+    height: 150px;
+    background-color: #7A4775;
+    display: flex;
+    padding: 10px;
+    align-items: center;
+    gap: 10px;
+    text-align: center;
+    box-shadow: 0 3px 0 #5F2959 ;
+    border-radius: 1px;
+    color: white;
+    font-weight: 500;
+}
+.nursing img{
+    padding-left: 10px;
+}
+
+.educ{
+    width: 100%;
+    height: 150px;
+    background-color: #286C9E;
+    display: flex;
+    padding: 10px;
+    align-items: center;
+    gap: 10px;
+    text-align: center;
+    box-shadow: 0 3px 0 #1E4664 ;
+    border-radius: 1px;
+    color: white;
+    font-weight: 500;
+}
+.educ img{
+    padding-left: 10px;
+}
+
+.engr{
+    width: 100%;
+    height: 150px;
+    background-color: #923E4A;
+    display: flex;
+    padding: 10px;
+    align-items: center;
+    gap: 10px;
+    text-align: center;
+    box-shadow: 0 3px 0 #6C2932 ;
+    border-radius: 1px;
+    color: white;
+    font-weight: 500;
+}
+.engr img{
+    padding-left: 10px;
+}
+
+.buss{
+    width: 100%;
+    height: 150px;
+    background-color: #989F4A;
+    display: flex;
+    padding: 10px;
+    align-items: center;
+    gap: 10px;
+    text-align: center;
+    box-shadow: 0 3px 0 #7B813E ;
+    border-radius: 1px;
+    color: white;
+    font-weight: 500;
+}
+.buss img{
+    padding-left: 10px;
+}
+
+.hos{
+    width: 100%;
+    height: 150px;
+    background-color: #5F3E75;
+    display: flex;
+    padding: 10px;
+    align-items: center;
+    gap: 10px;
+    text-align: center;
+    box-shadow: 0 3px 0 #3B204D ;
+    border-radius: 1px;
+    color: white;
+    font-weight: 500;
+}
+.hos img{
+    padding-left: 10px;
+}
+
+.cass{
+    width: 100%;
+    height: 150px;
+    background-color: #286D9F;
+    display: flex;
+    padding: 10px;
+    align-items: center;
+    gap: 10px;
+    text-align: center;
+    box-shadow: 0 3px 0 #224863 ;
+    border-radius: 1px;
+    color: white;
+    font-weight: 500;
+}
+.cass img{
+    padding-left: 10px;
+}
+
