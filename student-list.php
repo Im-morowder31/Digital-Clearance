@@ -78,9 +78,9 @@
                             <?php echo ($student['Library'] == 1) ? 'Approved' : 'Declined'; ?>
                         </th>
                         <th>
-                            <a href="update-status.php?stud_id=<?php echo $student['stud_id']; ?>" class="btn btn-outline-info">
-                                Update Status
-                            </a>
+                        <a href="update-status.php?stud_id=<?php echo $student['stud_id']; ?>&deptName=<?php echo urlencode($deptName); ?>" class="btn btn-outline-info">
+                            Update Status
+                        </a>
                         </th>
                     </tr>
                 <?php endforeach; ?>
