@@ -44,10 +44,6 @@
             <p>0122303926</p>
         </div>
         <div style="display: flex; gap:10px;">
-            <p class="fw-bold">LRN:</p>
-            <p>0122303926</p>
-        </div>
-        <div style="display: flex; gap:10px;">
             <p class="fw-bold">Sex:</p>
             <p>Male</p>
         </div>
@@ -69,12 +65,12 @@
             <p class="fw-bold">Religion:</p>
             <p>Male</p>
         </div>
+        </div>
+        <div>
         <div style="display: flex; gap:10px;">
             <p class="fw-bold">Nationality:</p>
             <p>Single</p>
         </div>
-        </div>
-        <div>
         <div style="display: flex; gap:10px;">
             <p class="fw-bold">Permanent Address:</p>
             <p>0122303926</p>
