@@ -11,17 +11,22 @@
     $deptName = isset($_GET['deptName']) ? $_GET['deptName'] : '';
 
     $status = '';
+    $comment = '';
 
     if (isset($_POST['updateButton'])) {
         $status = isset($_POST['radStatus']) ? $_POST['radStatus'] : '';
+        $comment = isset($_POST['commentArea']) ? trim($_POST['commentArea']) : '';
+
         if ($status === 'Approve') {
-            updateClearanceStatus($stud_id, 1, $deptAccount);
+            updateClearanceStatus($stud_id, 1, $deptAccount, $comment);
         } elseif ($status === 'Decline') {
-            updateClearanceStatus($stud_id, 0, $deptAccount);
+            updateClearanceStatus($stud_id, 0, $deptAccount, $comment);
         }
         header("Location: student-list.php?deptName=" . urlencode($deptName));
         exit();
     }
+
+    $comment = trim(getStudentComment($stud_id));
 
 ?>
 
@@ -75,31 +80,60 @@
         <div>
             <form method="post" class="">
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="radStatus" value="Approve" id="flexRadioDefault1" 
+                    <input class="form-check-input" type="radio" name="radStatus" value="Approve" id="approveRadio" 
                     <?php if ($currentStatus == 1) echo 'checked'; ?>>
-                    <label class="form-check-label text-success" for="flexRadioDefault1">
+                    <label class="form-check-label text-success" for="approveRadio">
                         Approve
                     </label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="radStatus" value="Decline" id="flexRadioDefault1" 
+                    <input class="form-check-input" type="radio" name="radStatus" value="Decline" id="declineRadio" 
                     <?php if ($currentStatus == 0) echo 'checked'; ?>>
-                    <label class="form-check-label text-danger" for="flexRadioDefault1">
+                    <label class="form-check-label text-danger" for="declineRadio">
                         Decline
                     </label>
-                </div>
                 <div class="mb-3 mt-2">
-                <label for="exampleFormControlTextarea1" class="form-label">Comment:</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    <label for="commentArea" class="form-label">Comment:</label>
+                    <textarea class="form-control" name="commentArea" id="commentArea" rows="3" onclick="this.setSelectionRange(0, 0)">
+                        <?php echo htmlspecialchars(trim($comment)); ?>
+                    </textarea>
                 </div>
                 <div class="pb-3 ps-3">
-                    <!-- Dynamically pass the deptName to the Cancel URL -->
                     <a href="student-list.php?deptName=<?php echo urlencode($deptName); ?>" class="btn btn-secondary btn-lg">Cancel</a>
                     <button type="submit" name="updateButton" class="btn btn-success btn-lg">Update</button>
                 </div>
             </form>
         </div>
     </div>
+
+    <script>
+
+        window.onload = function() {
+            const commentTextarea = document.getElementById('commentArea');
+            if (commentTextarea) {
+                commentTextarea.value = commentTextarea.value.trim();
+            }
+        };
+        // Get the radio buttons and textarea
+        const approveRadio = document.getElementById('approveRadio');
+        const declineRadio = document.getElementById('declineRadio');
+        const commentTextarea = document.getElementById('commentArea');
+
+        // Function to toggle textarea based on radio button selection
+        function toggleTextarea() {
+            if (approveRadio.checked) {
+                commentTextarea.disabled = true; // Disable textarea when 'Approve' is selected
+            } else if (declineRadio.checked) {
+                commentTextarea.disabled = false; // Enable textarea when 'Decline' is selected
+            }
+        }
+
+        // Add event listeners to the radio buttons
+        approveRadio.addEventListener('change', toggleTextarea);
+        declineRadio.addEventListener('change', toggleTextarea);
+
+        toggleTextarea();
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
