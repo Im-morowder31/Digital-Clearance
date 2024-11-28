@@ -4,12 +4,15 @@
 
 header{
     height: 100px;
+    
 }
+
+
 
 nav{
     font-size: 20px !important;
     display: flex !important;
-
+   
 }
 
 .nav-title {
@@ -17,4 +20,8 @@ nav{
     margin-left: 20% !important;
     font-weight: bold;
 }
+
+
+
+
 

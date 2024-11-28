@@ -21,6 +21,16 @@ header{
     border-radius: 1px;
     color: white;
     font-weight: 500;
+    
+}
+
+@keyframes height {
+    50%{transform: scale(2,2);}
+}
+
+.ccis:hover img {
+    animation-name: height;
+    animation-duration: 1s;
 }
 .ccis img{
     padding-left: 10px;
@@ -40,6 +50,10 @@ header{
     color: white;
     font-weight: 500;
 }
+.crim:hover img {
+    animation-name: height;
+    animation-duration: 1s;
+}
 .crim img{
     padding-left: 10px;
 }
@@ -58,8 +72,28 @@ header{
     color: white;
     font-weight: 500;
 }
+.nursing:hover img {
+    animation-name: height;
+    animation-duration: 1s;
+}
 .nursing img{
     padding-left: 10px;
+}
+
+main{
+    animation-name: slideLeft;
+    animation-duration: 1s;
+}
+header{
+    animation-name: slideBot;
+    animation-duration: 1s;
+}
+
+@keyframes slideLeft {
+    from{transform:translateX(100%) ;}
+}
+@keyframes slideBot {
+    from{transform: translateY(-100%);}
 }
 
 .educ{
@@ -75,6 +109,10 @@ header{
     border-radius: 1px;
     color: white;
     font-weight: 500;
+}
+.educ:hover img {
+    animation-name: height;
+    animation-duration: 1s;
 }
 .educ img{
     padding-left: 10px;
@@ -94,6 +132,10 @@ header{
     color: white;
     font-weight: 500;
 }
+.engr:hover img {
+    animation-name: height;
+    animation-duration: 1s;
+}
 .engr img{
     padding-left: 10px;
 }
@@ -111,6 +153,10 @@ header{
     border-radius: 1px;
     color: white;
     font-weight: 500;
+}
+.buss:hover img {
+    animation-name: height;
+    animation-duration: 1s;
 }
 .buss img{
     padding-left: 10px;
@@ -130,6 +176,10 @@ header{
     color: white;
     font-weight: 500;
 }
+.hos:hover img {
+    animation-name: height;
+    animation-duration: 1s;
+}
 .hos img{
     padding-left: 10px;
 }
@@ -147,6 +197,10 @@ header{
     border-radius: 1px;
     color: white;
     font-weight: 500;
+}
+.cass:hover img {
+    animation-name: height;
+    animation-duration: 1s;
 }
 .cass img{
     padding-left: 10px;
