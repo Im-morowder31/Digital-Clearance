@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Nov 27, 2024 at 05:13 PM
+-- Generation Time: Nov 28, 2024 at 09:11 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -57,17 +57,18 @@ CREATE TABLE `student_clearance` (
   `Library` int NOT NULL,
   `OSA` int NOT NULL,
   `Cashier` int NOT NULL,
-  `Student_Council` int NOT NULL,
-  `Dean` int NOT NULL
+  `Student Council` int NOT NULL,
+  `Dean` int NOT NULL,
+  `Comment` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `student_clearance`
 --
 
-INSERT INTO `student_clearance` (`id`, `stud_id`, `Library`, `OSA`, `Cashier`, `Student_Council`, `Dean`) VALUES
-(1, 200890522, 1, 0, 0, 0, 0),
-(2, 200890563, 0, 0, 0, 0, 0);
+INSERT INTO `student_clearance` (`id`, `stud_id`, `Library`, `OSA`, `Cashier`, `Student Council`, `Dean`, `Comment`) VALUES
+(1, 200890522, 0, 0, 0, 0, 0, ''),
+(2, 200890563, 1, 1, 1, 0, 0, '');
 
 -- --------------------------------------------------------
 
