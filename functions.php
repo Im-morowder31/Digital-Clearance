@@ -285,53 +285,65 @@
         return $status;
     }
 
-    function fetchStudentsByCourses($courses, $column) {
+    function fetchStudentsByCourses($courses, $currentDept) {
         $con = openCon();
     
-        // If no courses are selected, return an empty array
         if (empty($courses)) {
             error_log("No courses selected.");
             return [];
         }
     
-        // Escape course names to prevent SQL injection
+        // Clearance order
+        $clearanceOrder = ['Library', 'OSA', 'Cashier', 'Student Council', 'Dean'];
+    
+        // Determine preceding departments
+        $currentIndex = array_search($currentDept, $clearanceOrder);
+        if ($currentIndex === false) {
+            error_log("Invalid department: $currentDept");
+            return [];
+        }
+        $precedingDepartments = array_slice($clearanceOrder, 0, $currentIndex);
+    
+        // Build approval condition
+        $approvalConditions = [];
+        foreach ($precedingDepartments as $dept) {
+            $approvalConditions[] = "sc.`$dept` = 1";
+        }
+        $approvalCondition = !empty($approvalConditions) ? implode(" AND ", $approvalConditions) : "1=1";
+        error_log("Approval condition: $approvalCondition");
+    
+        // Escape and list courses
         $coursesEscaped = array_map(function($course) use ($con) {
             return "'" . $con->real_escape_string($course) . "'";
         }, $courses);
         $coursesList = implode(",", $coursesEscaped);
     
-        // Build the SQL query dynamically to select the clearance field
-        $sql = "SELECT si.stud_id, su.name, si.Section, si.Course, sc.$column
+        // Build SQL query
+        $sql = "SELECT si.stud_id, su.name, si.Section, si.Course, sc.`$currentDept`
                 FROM student_info si
                 LEFT JOIN student_clearance sc ON si.stud_id = sc.stud_id
                 LEFT JOIN student_users su ON si.stud_id = su.stud_id
-                WHERE si.Course IN ($coursesList)";
+                WHERE si.Course IN ($coursesList) AND ($approvalCondition)";
     
-        error_log("SQL Query: " . $sql);
+        error_log("SQL Query: $sql");
     
-        // Prepare and execute the query
-        if ($stmt = $con->prepare($sql)) {
-            $stmt->execute();
-            $result = $stmt->get_result();
-    
-            if ($result->num_rows > 0) {
-                $students = [];
-                while ($row = $result->fetch_assoc()) {
-                    $students[] = $row;
-                }
-            } else {
-                error_log("No students found for the selected courses.");
-                $students = [];
-            }
-    
-            $stmt->close();
-        } else {
-            $students = [];
+        $stmt = $con->prepare($sql);
+        if (!$stmt) {
             error_log("Error preparing statement: " . $con->error);
+            return [];
         }
     
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $students = [];
+        while ($row = $result->fetch_assoc()) {
+            $students[] = $row;
+        }
+    
+        $stmt->close();
         closeCon($con);
+    
         return $students;
-    }   
+    }  
 
 ?>
