@@ -42,7 +42,7 @@
             <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-10 text-white " href="#"><?= htmlspecialchars($headerTitle) ?></a>
         </div>
         <div class=" me-5 ">
-            <a href="index.php" class="text-light">               
+            <a href="logout.php" class="text-light">               
                 <i class="fa-solid fa-right-from-bracket fs-5 p-1">Logout</i>               
             </a>
         </div>
