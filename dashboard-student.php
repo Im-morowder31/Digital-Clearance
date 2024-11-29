@@ -9,6 +9,9 @@
     $studentID = $_SESSION['idNumber'];
 
     $studentInfo = $studentID ? getStudentInfo($studentID) : null;
+    $clearanceData = getClearanceStatus($studentID);
+    $approvedCount = getApprovedCount($studentID); 
+    $comment = getDepartmentComment($studentID);
 
     $sex = $studentInfo['Sex'] ?? 'Not Specified';
     $civilStatus = $studentInfo['Civil_Status'] ?? 'Not Specified';
@@ -109,7 +112,6 @@
                         </div>
                     </div>
                 </div>
-
                 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="160px" height="160px">
                     <defs>
                         <linearGradient id="GradientColor">
@@ -132,40 +134,76 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th>2009998887</th>
-                        <th>Library</th>
-                        <th class="text-danger">Decline</th>
-                        <th><button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">View Comment</button></th>
-                    </tr>
+                    <?php foreach ($clearanceData as $data): ?>
+                        <tr>
+                            <th>2009998887</th>
+                            <th>Library</th>
+                            <th class="<?php echo ($data['Library'] == 0 ? 'text-danger' : 'text-success'); ?>">
+                                <?php echo ($data['Library'] == 0 ? 'Decline' : 'Approve'); ?>
+                            </th>
+                            <th><button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">View Comment</button></th>
+                        </tr>
+                        <tr>
+                            <th>100045768</th>
+                            <th>OSA</th>
+                            <th class="<?php echo ($data['OSA'] == 0 ? 'text-danger' : 'text-success'); ?>">
+                                <?php echo ($data['OSA'] == 0 ? 'Decline' : 'Approve'); ?>
+                            </th>
+                            <th><button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">View Comment</button></th>
+                        </tr>
+                        <tr>
+                            <th>122345342</th>
+                            <th>Cashier</th>
+                            <th class="<?php echo ($data['Cashier'] == 0 ? 'text-danger' : 'text-success'); ?>">
+                                <?php echo ($data['Cashier'] == 0 ? 'Decline' : 'Approve'); ?>
+                            </th>
+                            <th><button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">View Comment</button></th>
+                        </tr>
+                        <tr>
+                            <th>200987836</th>
+                            <th>Student Council</th>
+                            <th class="<?php echo ($data['Student Council'] == 0 ? 'text-danger' : 'text-success'); ?>">
+                                <?php echo ($data['Student Council'] == 0 ? 'Decline' : 'Approve'); ?>
+                            </th>
+                            <th><button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">View Comment</button></th>
+                        </tr>
+                        <tr>
+                            <th>300908645</th>
+                            <th>Dean</th>
+                            <th class="<?php echo ($data['Dean'] == 0 ? 'text-danger' : 'text-success'); ?>">
+                                <?php echo ($data['Dean'] == 0 ? 'Decline' : 'Approve'); ?>
+                            </th>
+                            <th><button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">View Comment</button></th>
+                        </tr>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
         </div>
     </div>
 
     <div class="modal" tabindex="-1" id="exampleModal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Modal title</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <p>Modal body text goes here.</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-      </div>
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Comment</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p><?php echo $comment ?></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
 
     <script>
        let number = document.getElementById("number");
         let progressCircle = document.getElementById("progress-circle");
 
         let counter = 0; // Start from 0 or any initial value
-        let targetValue = 100; // Desired end value
+        let targetValue = <?php echo $approvedCount ?>; // Desired end value
         let maxCounter = 100; // Maximum percentage (100%)
         let maxDashOffset = 472; // Full circle dasharray value (circumference of the circle)
 
@@ -186,8 +224,6 @@
                 progressCircle.style.strokeDashoffset = dashOffset; // Apply the new offset
             }
         }, 30); // Adjust the speed of animation
-
-
 
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
