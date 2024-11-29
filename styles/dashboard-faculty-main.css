@@ -15,12 +15,13 @@ header{
     display: flex;
     padding: 10px;
     align-items: center;
-    
     text-align: center;
     box-shadow: 0 3px 0 #63673C ;
     border-radius: 1px;
     color: white;
     font-weight: 500;
+    animation-name: slideRight;
+    animation-duration: 1s;
     
 }
 
@@ -49,6 +50,8 @@ header{
     border-radius: 1px;
     color: white;
     font-weight: 500;
+    animation-name: slideBot;
+    animation-duration: 1s
 }
 .crim:hover img {
     animation-name: height;
@@ -71,6 +74,8 @@ header{
     border-radius: 1px;
     color: white;
     font-weight: 500;
+    animation-name: slideLeft;
+    animation-duration: 1s;
 }
 .nursing:hover img {
     animation-name: height;
@@ -80,10 +85,7 @@ header{
     padding-left: 10px;
 }
 
-main{
-    animation-name: slideLeft;
-    animation-duration: 1s;
-}
+
 header{
     animation-name: slideBot;
     animation-duration: 1s;
@@ -92,10 +94,17 @@ header{
 @keyframes slideLeft {
     from{transform:translateX(100%) ;}
 }
+
+@keyframes slideRight {
+    from{transform: translateX(-100%);}
+}
 @keyframes slideBot {
     from{transform: translateY(-100%);}
 }
 
+@keyframes slideTop {
+    from{transform: translateY(100%);}
+}
 .educ{
     width: 100%;
     height: 150px;
@@ -109,6 +118,8 @@ header{
     border-radius: 1px;
     color: white;
     font-weight: 500;
+    animation-name: slideRight;
+    animation-duration: 1s;
 }
 .educ:hover img {
     animation-name: height;
@@ -131,6 +142,8 @@ header{
     border-radius: 1px;
     color: white;
     font-weight: 500;
+    animation-name: slideBot;
+    animation-duration: 1s
 }
 .engr:hover img {
     animation-name: height;
@@ -153,6 +166,8 @@ header{
     border-radius: 1px;
     color: white;
     font-weight: 500;
+    animation-name: slideLeft;
+    animation-duration: 1s;
 }
 .buss:hover img {
     animation-name: height;
@@ -175,6 +190,8 @@ header{
     border-radius: 1px;
     color: white;
     font-weight: 500;
+    animation-name: slideTop;
+    animation-duration: 1s;
 }
 .hos:hover img {
     animation-name: height;
@@ -197,6 +214,8 @@ header{
     border-radius: 1px;
     color: white;
     font-weight: 500;
+    animation-name: slideTop;
+    animation-duration: 1s;
 }
 .cass:hover img {
     animation-name: height;
