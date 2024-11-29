@@ -7,35 +7,31 @@
     $errorArray = [];
 
     /*// Example student data to be inserted
-    $studentID = '200890563';
-    $lrn = '101002563862';
+    $studentID = '0122303926';
+    $password = 'Beltran0122303926';
+    $name = 'John Andre Beltran';
+
+    $lrn = '0000';
     $sex = 'Male';
     $civilStatus = 'Single';
-    $dob = 'October 15, 2004';
-    $pob = 'Mabalacat, Pampanga';
-    $religion = 'Christian';
+    $dob = 'May 9, 2001';
+    $pob = 'Angeles city, Pampanga';
+    $religion = 'Roman Catholic';
     $nationality = 'Filipino';
-    $address = 'Blk 75 lot 18 brgy VDR Dapdap, Bamban, Tarlac';
-    $contactNo = '09123456789';
+    $address = '1106 cubul sapalibutad, Angeles city';
+    $contactNo = '09942072292';
     $course = 'BSIT';
-    $section = '3A';
+    $section = 'CCIS7E';
 
-    // Insert into student_info table
-    insertStudentInfo($studentID, $lrn, $sex, $civilStatus, $dob, $pob, $religion, $nationality, $address, $contactNo, $course, $section);
-
-    // Insert into student_clearance table
     $library = 0;
     $osa = 0;
     $cashier = 0;
     $studentCouncil = 0;
     $dean = 0;
+    $comment = '';
 
-    addStudentClearance($studentID, $library, $osa, $cashier, $studentCouncil, $dean);
-
-    // Insert into student_users table
-    $password = 'John Doe';
-    $name = 'John Doe';
-
+    insertStudentInfo($lrn, $sex, $civilStatus, $dob, $pob, $religion, $nationality, $address, $contactNo, $course, $section, $studentID);
+    addStudentClearance($studentID, $library, $osa, $cashier, $studentCouncil, $dean, $comment);
     addStudentUser($studentID, $password, $name);*/
 
     if (isset($_POST['loginButton'])) { 
