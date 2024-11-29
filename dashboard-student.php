@@ -135,49 +135,70 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($clearanceData as $data): ?>
-                        <tr>
-                            <th>2009998887</th>
-                            <th>Library</th>
-                            <th class="<?php echo ($data['Library'] == 0 ? 'text-danger' : 'text-success'); ?>">
-                                <?php echo ($data['Library'] == 0 ? 'Decline' : 'Approve'); ?>
-                            </th>
-                            <th><button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">View Comment</button></th>
-                        </tr>
-                        <tr>
-                            <th>100045768</th>
-                            <th>OSA</th>
-                            <th class="<?php echo ($data['OSA'] == 0 ? 'text-danger' : 'text-success'); ?>">
-                                <?php echo ($data['OSA'] == 0 ? 'Decline' : 'Approve'); ?>
-                            </th>
-                            <th><button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">View Comment</button></th>
-                        </tr>
-                        <tr>
-                            <th>122345342</th>
-                            <th>Cashier</th>
-                            <th class="<?php echo ($data['Cashier'] == 0 ? 'text-danger' : 'text-success'); ?>">
-                                <?php echo ($data['Cashier'] == 0 ? 'Decline' : 'Approve'); ?>
-                            </th>
-                            <th><button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">View Comment</button></th>
-                        </tr>
-                        <tr>
-                            <th>200987836</th>
-                            <th>Student Council</th>
-                            <th class="<?php echo ($data['Student Council'] == 0 ? 'text-danger' : 'text-success'); ?>">
-                                <?php echo ($data['Student Council'] == 0 ? 'Decline' : 'Approve'); ?>
-                            </th>
-                            <th><button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">View Comment</button></th>
-                        </tr>
-                        <tr>
-                            <th>300908645</th>
-                            <th>Dean</th>
-                            <th class="<?php echo ($data['Dean'] == 0 ? 'text-danger' : 'text-success'); ?>">
-                                <?php echo ($data['Dean'] == 0 ? 'Decline' : 'Approve'); ?>
-                            </th>
-                            <th><button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">View Comment</button></th>
-                        </tr>
-                    <?php endforeach; ?>
-                </tbody>
+    <?php foreach ($clearanceData as $data): ?>
+        <tr>
+            <th>2009998887</th>
+            <th>Library</th>
+            <th class="<?php echo ($data['Library'] == 0 ? 'text-danger' : 'text-success'); ?>">
+                <?php echo ($data['Library'] == 0 ? 'Decline' : 'Approve'); ?>
+            </th>
+            <th>
+                <?php if ($data['Library'] == 0): ?>
+                    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">View Comment</button>
+                <?php endif; ?>
+            </th>
+        </tr>
+        <tr>
+            <th>100045768</th>
+            <th>OSA</th>
+            <th class="<?php echo ($data['OSA'] == 0 ? 'text-danger' : 'text-success'); ?>">
+                <?php echo ($data['OSA'] == 0 ? 'Decline' : 'Approve'); ?>
+            </th>
+            <th>
+                <?php if ($data['OSA'] == 0): ?>
+                    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">View Comment</button>
+                <?php endif; ?>
+            </th>
+        </tr>
+        <tr>
+            <th>122345342</th>
+            <th>Cashier</th>
+            <th class="<?php echo ($data['Cashier'] == 0 ? 'text-danger' : 'text-success'); ?>">
+                <?php echo ($data['Cashier'] == 0 ? 'Decline' : 'Approve'); ?>
+            </th>
+            <th>
+                <?php if ($data['Cashier'] == 0): ?>
+                    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">View Comment</button>
+                <?php endif; ?>
+            </th>
+        </tr>
+        <tr>
+            <th>200987836</th>
+            <th>Student Council</th>
+            <th class="<?php echo ($data['Student Council'] == 0 ? 'text-danger' : 'text-success'); ?>">
+                <?php echo ($data['Student Council'] == 0 ? 'Decline' : 'Approve'); ?>
+            </th>
+            <th>
+                <?php if ($data['Student Council'] == 0): ?>
+                    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">View Comment</button>
+                <?php endif; ?>
+            </th>
+        </tr>
+        <tr>
+            <th>300908645</th>
+            <th>Dean</th>
+            <th class="<?php echo ($data['Dean'] == 0 ? 'text-danger' : 'text-success'); ?>">
+                <?php echo ($data['Dean'] == 0 ? 'Decline' : 'Approve'); ?>
+            </th>
+            <th>
+                <?php if ($data['Dean'] == 0): ?>
+                    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">View Comment</button>
+                <?php endif; ?>
+            </th>
+        </tr>
+    <?php endforeach; ?>
+</tbody>
+
             </table>
         </div>
     </div>

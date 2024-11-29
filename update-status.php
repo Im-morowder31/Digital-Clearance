@@ -114,21 +114,17 @@
                 commentTextarea.value = commentTextarea.value.trim();
             }
         };
-        // Get the radio buttons and textarea
         const approveRadio = document.getElementById('approveRadio');
         const declineRadio = document.getElementById('declineRadio');
         const commentTextarea = document.getElementById('commentArea');
-
-        // Function to toggle textarea based on radio button selection
         function toggleTextarea() {
             if (approveRadio.checked) {
-                commentTextarea.disabled = true; // Disable textarea when 'Approve' is selected
+                commentTextarea.disabled = true; 
+                commentTextarea.value = "";
             } else if (declineRadio.checked) {
-                commentTextarea.disabled = false; // Enable textarea when 'Decline' is selected
+                commentTextarea.disabled = false; 
             }
         }
-
-        // Add event listeners to the radio buttons
         approveRadio.addEventListener('change', toggleTextarea);
         declineRadio.addEventListener('change', toggleTextarea);
 

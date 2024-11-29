@@ -221,13 +221,16 @@
     function updateClearanceStatus($stud_id, $status, $column, $comment) {
         $con = openCon();
         
+        $column = "`" . str_replace("`", "``", $column) . "`"; 
         $sql = "UPDATE student_clearance SET $column = ?, Comment = ? WHERE stud_id = ?";
+        
         $query = $con->prepare($sql);
         $query->bind_param("iss", $status, $comment, $stud_id);
         
         $query->execute();
         closeCon($con);
     }
+    
 
     function getStudentComment($stud_id) {
         $con = openCon();
