@@ -343,8 +343,85 @@
         }
         closeCon($con);
     }
-    
 
+    function getClearanceStatus($stud_id) {
+        $con = openCon();
+        
+        // SQL query to fetch clearance data for the student
+        $sql = "SELECT Library, OSA, Cashier, `Student Council`, Dean 
+                FROM student_clearance 
+                WHERE stud_id = ?";
+        
+        $query = $con->prepare($sql);
+        $query->bind_param("i", $stud_id);
+        $query->execute();
+        $result = $query->get_result();
+    
+        $clearanceData = [];
+        while ($row = $result->fetch_assoc()) {
+            $clearanceData[] = $row;
+        }
+    
+        // Debugging: Check if the data is empty or not
+        if (empty($clearanceData)) {
+            echo "No clearance data found for student ID: $stud_id"; // This helps to debug if no data is returned
+        }
+    
+        closeCon($con);
+        return $clearanceData;
+    }
+
+    function getApprovedCount($stud_id) {
+        $con = openCon();
+        
+        // SQL query to fetch clearance data for the student
+        $sql = "SELECT Library, OSA, Cashier, `Student Council`, Dean 
+                FROM student_clearance 
+                WHERE stud_id = ?";
+        
+        $query = $con->prepare($sql);
+        $query->bind_param("i", $stud_id);
+        $query->execute();
+        $result = $query->get_result();
+    
+        $approvedCount = 0;
+    
+        if ($row = $result->fetch_assoc()) {
+            // Count the number of 1's in the clearance data
+            foreach (['Library', 'OSA', 'Cashier', 'Student Council', 'Dean'] as $department) {
+                if ($row[$department] == 1) {
+                    $approvedCount++;
+                }
+            }
+        }
+    
+        closeCon($con);
+        return $approvedCount;
+    }
+
+    function getDepartmentComment($stud_id) {
+        $con = openCon();
+        
+        // Query to fetch the comment for the student
+        $sql = "SELECT comment FROM student_clearance WHERE stud_id = ?";
+        
+        $query = $con->prepare($sql);
+        $query->bind_param("i", $stud_id);
+        $query->execute();
+        $result = $query->get_result();
+        
+        $comment = "";
+        if ($row = $result->fetch_assoc()) {
+            $comment = $row['comment']; // Fetch the comment
+        }
+        
+        closeCon($con);
+        
+        return $comment;
+    }
+    
+    
+    
     
     
 
