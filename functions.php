@@ -325,4 +325,27 @@
         return $students;
     }  
 
+    function getStudentInfo($studentID) {
+        // Open database connection
+        $con = openCon();
+        
+        // Prepare the SQL query
+        $query = "SELECT * FROM student_info WHERE stud_id = ?";
+        $stmt = $con->prepare($query);
+        $stmt->bind_param("s", $studentID);
+        $stmt->execute();
+        $result = $stmt->get_result();
+    
+        if ($result->num_rows > 0) {
+            return $result->fetch_assoc();
+        } else {
+            return null;
+        }
+        closeCon($con);
+    }
+    
+
+    
+    
+
 ?>

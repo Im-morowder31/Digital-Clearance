@@ -57,9 +57,7 @@
                     $_SESSION['user_name'] = 'Unknown Faculty'; 
                 }
                 header('Location: dashboard-faculty.php'); // Redirect to faculty dashboard
-
             } 
-
             elseif ($type === 'Student') {
                 $studentName = getStudentUserNameById($idNumber); 
                 if ($studentName) {
@@ -89,8 +87,10 @@
     <title>Login</title>
 </head>
 <body>
-    <?php echo displayErrors($errorArray); ?>
-    <div class="container glass">
+    <div class="z-3">
+        <?php echo displayErrors($errorArray); ?>
+    </div>
+    <div class="container glass z-0">
         <img src="images/logo.png" alt="Logo" height="120px">
         <h1>Systems Plus</h1>
         <div class="form">

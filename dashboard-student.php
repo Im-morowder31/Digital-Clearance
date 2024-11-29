@@ -5,6 +5,22 @@
     $checkStudent = isset($_SESSION['user_name']) ? $_SESSION['user_name'] : 'Student';
     $studentName = $_SESSION['user_name'];
 
+    $checkId = isset($_SESSION['idNumber']) ? $_SESSION['idNumber'] : 'Unknown ID';
+    $studentID = $_SESSION['idNumber'];
+
+    $studentInfo = $studentID ? getStudentInfo($studentID) : null;
+
+    $sex = $studentInfo['Sex'] ?? 'Not Specified';
+    $civilStatus = $studentInfo['Civil_Status'] ?? 'Not Specified';
+    $dob = $studentInfo['Date_of_Birth'] ?? 'Not Specified';
+    $pob = $studentInfo['Place_of_Birth'] ?? 'Not Specified';
+    $religion = $studentInfo['Religion'] ?? 'Not Specified';
+    $nationality = $studentInfo['Nationality'] ?? 'Not Specified';
+    $address = $studentInfo['Address'] ?? 'Not Specified';
+    $contactNumber = $studentInfo['Contact_Number'] ?? 'Not Specified';
+    $course = $studentInfo['Course'] ?? 'Not Specified';
+    $section = $studentInfo['Section'] ?? 'Not Specified';
+
 ?>
 
 <!DOCTYPE html>
@@ -30,9 +46,7 @@
             </a>
         </div>
     </header>
-    
 
-        
     <div class="container pt-3 ps-5 mt-4 custom-shadow position-relative">
         <p class="" style="font-size: 40px;">
         <?php echo $_SESSION['user_name']; ?>
@@ -41,43 +55,43 @@
         <div>   
         <div style="display: flex; gap:10px;">
             <p class="fw-bold">Student ID:</p>
-            <p>0122303926</p>
+            <p><?php echo htmlspecialchars($studentID) ?></p>
         </div>
         <div style="display: flex; gap:10px;">
             <p class="fw-bold">Sex:</p>
-            <p>Male</p>
+            <p><?php echo htmlspecialchars($sex) ?></p>
         </div>
         <div style="display: flex; gap:10px;">
             <p class="fw-bold">Civil Status:</p>
-            <p>Single</p>
+            <p><?php echo htmlspecialchars($civilStatus) ?></p>
         </div>
         </div> 
         <div>
         <div style="display: flex; gap:10px;">
             <p class="fw-bold">Date of Birth:</p>
-            <p>0122303926</p>
+            <p><?php echo htmlspecialchars($dob) ?></p>
         </div>
         <div style="display: flex; gap:10px;">
             <p class="fw-bold">Place of Birth:</p>
-            <p>0122303926</p>
+            <p><?php echo htmlspecialchars($pob) ?></p>
         </div>
         <div style="display: flex; gap:10px;">
             <p class="fw-bold">Religion:</p>
-            <p>Male</p>
+            <p><?php echo htmlspecialchars($religion) ?></p>
         </div>
         </div>
         <div>
         <div style="display: flex; gap:10px;">
             <p class="fw-bold">Nationality:</p>
-            <p>Single</p>
+            <p><?php echo htmlspecialchars($nationality) ?></p>
         </div>
         <div style="display: flex; gap:10px;">
             <p class="fw-bold">Permanent Address:</p>
-            <p>0122303926</p>
+            <p><?php echo htmlspecialchars($address) ?></p>
         </div>
         <div style="display: flex; gap:10px;">
             <p class="fw-bold">Contact No:</p>
-            <p>0122303926</p>
+            <p><?php echo htmlspecialchars($contactNumber) ?></p>
         </div>
         </div>
         <div class="position-absolute end-0 me-5  top-0 mt-4">
