@@ -12,6 +12,7 @@
     $clearanceData = getClearanceStatus($studentID);
     $approvedCount = getApprovedCount($studentID); 
     $comment = getDepartmentComment($studentID);
+    $approvedCount *= 20;
 
     $sex = $studentInfo['Sex'] ?? 'Not Specified';
     $civilStatus = $studentInfo['Civil_Status'] ?? 'Not Specified';

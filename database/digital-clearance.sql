@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Nov 28, 2024 at 09:11 AM
+-- Generation Time: Nov 29, 2024 at 09:24 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -67,8 +67,10 @@ CREATE TABLE `student_clearance` (
 --
 
 INSERT INTO `student_clearance` (`id`, `stud_id`, `Library`, `OSA`, `Cashier`, `Student Council`, `Dean`, `Comment`) VALUES
-(1, 200890522, 0, 0, 0, 0, 0, ''),
-(2, 200890563, 1, 1, 1, 0, 0, '');
+(3, 121300331, 1, 0, 0, 0, 0, ''),
+(4, 121300314, 0, 0, 0, 0, 0, ''),
+(5, 121302381, 0, 0, 0, 0, 0, ''),
+(6, 122303926, 0, 0, 0, 0, 0, '');
 
 -- --------------------------------------------------------
 
@@ -97,8 +99,10 @@ CREATE TABLE `student_info` (
 --
 
 INSERT INTO `student_info` (`id`, `LRN`, `Sex`, `Civil_Status`, `Date_of_Birth`, `Place_of_Birth`, `Religion`, `Nationality`, `Address`, `Contact_Number`, `Course`, `Section`, `stud_id`) VALUES
-(1, '106315', 'Male', 'Single', 'October 15, 2004', 'Mabalacat, Pampanga', 'Christian', 'Filipino', 'Blk 75 lot 18 brgy VDR Dapdap, Bamban, Tarlac', '09123456789', 'BSIT', '3B', 200890522),
-(9, '101002563862', 'Male', 'Single', 'October 15, 2004', 'Mabalacat, Pampanga', 'Christian', 'Filipino', 'Blk 75 lot 18 brgy VDR Dapdap, Bamban, Tarlac', '09123456789', 'BSIT', '3A', 200890563);
+(10, '0000', 'Male', 'Single', 'September 6, 2003', 'Angeles City, Pampanga', 'Roman Catholic', 'Filipino', 'Brgy. Santiago Concepcion, Tarlac', '09052564546', 'BSIT', 'CCIS7E', 121300331),
+(11, '0000', 'Male', 'Single', 'December 6, 2002', 'Concepcion, Tarlac', 'Roman Catholic', 'Filipino', 'Brgy. Minane Concepcion, Tarlac', '09917928078', 'BSIT', 'CCIS7E', 121300314),
+(12, '0000', 'Male', 'Single', 'September 30, 2003', 'Calumpit, Bulacan', 'Roman Catholic', 'Filipino', 'Mabalacat City Pampanga', '09765742023', 'BSIT', 'CCIS7E', 121302381),
+(13, '0000', 'Male', 'Single', 'May 9, 2001', 'Angeles city, Pampanga', 'Roman Catholic', 'Filipino', '1106 cubul sapalibutad, Angeles city', '09942072292', 'BSIT', 'CCIS7E', 122303926);
 
 -- --------------------------------------------------------
 
@@ -118,10 +122,10 @@ CREATE TABLE `student_users` (
 --
 
 INSERT INTO `student_users` (`id`, `stud_id`, `password`, `name`) VALUES
-(1, '0122303926', '47a7d4c8e93337305ff9017722f8fff3', 'John Andre D. Beltran'),
-(2, '0121302381', 'f4629b0cb658b6157989389213bc6cae', 'Karl John L. Nucum'),
-(6, '200890522', 'c240f465062285655fce1d896d4ef4fb', 'John Paul Dungca'),
-(7, '200890563', '4c2a904bafba06591225113ad17b5cec', 'John Doe');
+(8, '0121300331', 'a23ce8b43ad54109d361bd8b63d30fb3', 'Ram Yturralde'),
+(9, '0121300314', '47bdef85adbe8fb68bbc809aaf55c8cc', 'Louis Tiomico'),
+(10, '0121302381', 'f4629b0cb658b6157989389213bc6cae', 'Karl John Nucum'),
+(11, '0122303926', '47a7d4c8e93337305ff9017722f8fff3', 'John Andre Beltran');
 
 --
 -- Indexes for dumped tables
@@ -165,19 +169,19 @@ ALTER TABLE `faculty_users`
 -- AUTO_INCREMENT for table `student_clearance`
 --
 ALTER TABLE `student_clearance`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `student_info`
 --
 ALTER TABLE `student_info`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `student_users`
 --
 ALTER TABLE `student_users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

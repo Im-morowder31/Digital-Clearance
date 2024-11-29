@@ -119,18 +119,17 @@
         return $abbreviation;
     }
 
-    function insertStudentInfo($studentID, $lrn, $sex, $civilStatus, $dob, $pob, $religion, $nationality, $address, $contactNo, $course, $section) {
+    function insertStudentInfo($lrn, $sex, $civilStatus, $dob, $pob, $religion, $nationality, $address, $contactNo, $course, $section, $studentID) {
         $con = openCon(); 
 
         $query = $con->prepare("
             INSERT INTO student_info 
-            (stud_id, LRN, Sex, Civil_Status, Date_of_Birth, Place_of_Birth, Religion, Nationality, Address, Contact_Number, Course, Section) 
+            (LRN, Sex, Civil_Status, Date_of_Birth, Place_of_Birth, Religion, Nationality, Address, Contact_Number, Course, Section, stud_id) 
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ");
         
         $query->bind_param(
-            "ssssssssssss", 
-            $studentID,
+            "ssssssssssss",   
             $lrn, 
             $sex, 
             $civilStatus, 
@@ -141,7 +140,8 @@
             $address, 
             $contactNo, 
             $course, 
-            $section 
+            $section,
+            $studentID
         );
         
         if ($query->execute()) {
@@ -176,14 +176,14 @@
         }
     }
 
-    function addStudentClearance($studentID, $library, $osa, $cashier, $studentCouncil, $dean) {
+    function addStudentClearance($studentID, $library, $osa, $cashier, $studentCouncil, $dean, $comment) {
         $con = openCon();
     
-        $sql = "INSERT INTO student_clearance (stud_id, Library, OSA, Cashier, Student_Council, Dean) 
-                VALUES (?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO student_clearance (stud_id, Library, OSA, Cashier, `Student Council`, Dean, Comment) 
+                VALUES (?, ?, ?, ?, ?, ?, ?)";
         $stmt = mysqli_prepare($con, $sql);
         if ($stmt) {
-            mysqli_stmt_bind_param($stmt, 'ssssss', $studentID, $library, $osa, $cashier, $studentCouncil, $dean);
+            mysqli_stmt_bind_param($stmt, 'sssssss', $studentID, $library, $osa, $cashier, $studentCouncil, $dean, $comment);
             if (mysqli_stmt_execute($stmt)) {
                 echo "Student clearance record added successfully.";
             } else {
@@ -215,7 +215,6 @@
         } else {
             return null;
         }
-
         closeCon($con);
     }
 
@@ -238,12 +237,11 @@
         $query->bind_param("i", $stud_id);  
         $query->execute();
         $result = $query->get_result();
-    
         $comment = '';
+
         if ($row = $result->fetch_assoc()) {
             $comment = $row['comment'];
         }
-    
         closeCon($con);
         return $comment;
     }
@@ -269,7 +267,6 @@
         } else {
             $status = null;
         }
-    
         closeCon($con);
         return $status;
     }
@@ -326,10 +323,8 @@
     }  
 
     function getStudentInfo($studentID) {
-        // Open database connection
         $con = openCon();
-        
-        // Prepare the SQL query
+
         $query = "SELECT * FROM student_info WHERE stud_id = ?";
         $stmt = $con->prepare($query);
         $stmt->bind_param("s", $studentID);
@@ -346,8 +341,7 @@
 
     function getClearanceStatus($stud_id) {
         $con = openCon();
-        
-        // SQL query to fetch clearance data for the student
+
         $sql = "SELECT Library, OSA, Cashier, `Student Council`, Dean 
                 FROM student_clearance 
                 WHERE stud_id = ?";
@@ -361,12 +355,9 @@
         while ($row = $result->fetch_assoc()) {
             $clearanceData[] = $row;
         }
-    
-        // Debugging: Check if the data is empty or not
         if (empty($clearanceData)) {
-            echo "No clearance data found for student ID: $stud_id"; // This helps to debug if no data is returned
+            echo "No clearance data found for student ID: $stud_id";
         }
-    
         closeCon($con);
         return $clearanceData;
     }
@@ -374,7 +365,6 @@
     function getApprovedCount($stud_id) {
         $con = openCon();
         
-        // SQL query to fetch clearance data for the student
         $sql = "SELECT Library, OSA, Cashier, `Student Council`, Dean 
                 FROM student_clearance 
                 WHERE stud_id = ?";
@@ -387,24 +377,20 @@
         $approvedCount = 0;
     
         if ($row = $result->fetch_assoc()) {
-            // Count the number of 1's in the clearance data
             foreach (['Library', 'OSA', 'Cashier', 'Student Council', 'Dean'] as $department) {
                 if ($row[$department] == 1) {
                     $approvedCount++;
                 }
             }
         }
-    
         closeCon($con);
         return $approvedCount;
     }
 
     function getDepartmentComment($stud_id) {
         $con = openCon();
-        
-        // Query to fetch the comment for the student
+
         $sql = "SELECT comment FROM student_clearance WHERE stud_id = ?";
-        
         $query = $con->prepare($sql);
         $query->bind_param("i", $stud_id);
         $query->execute();
@@ -412,17 +398,9 @@
         
         $comment = "";
         if ($row = $result->fetch_assoc()) {
-            $comment = $row['comment']; // Fetch the comment
+            $comment = $row['comment']; 
         }
-        
-        closeCon($con);
-        
+        closeCon($con); 
         return $comment;
     }
-    
-    
-    
-    
-    
-
 ?>
