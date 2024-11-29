@@ -17,10 +17,7 @@
         'COLLEGE OF ARTS AND SOCIAL SCIENCES' => ['BeEd', 'BSEd', 'BAC', 'BSSW']
     ];
 
-    // Get the courses for the selected department
     $courses = isset($deptCourses[$deptName]) ? $deptCourses[$deptName] : [];
-
-    // Fetch students based on the selected department courses
     $students = fetchStudentsByCourses($courses, $deptAccount);
 
 ?>
