@@ -52,7 +52,7 @@
         <?php echo $_SESSION['user_name']; ?>
         </p>
         <div class="d-flex justify-content-between custom-info">
-        <div>   
+        <div class="col-md-3">   
         <div style="display: flex; gap:10px;">
             <p class="fw-bold">Student ID:</p>
             <p><?php echo htmlspecialchars($studentID) ?></p>
@@ -66,7 +66,7 @@
             <p><?php echo htmlspecialchars($civilStatus) ?></p>
         </div>
         </div> 
-        <div>
+        <div class="col-md-4">
         <div style="display: flex; gap:10px;">
             <p class="fw-bold">Date of Birth:</p>
             <p><?php echo htmlspecialchars($dob) ?></p>
@@ -80,7 +80,7 @@
             <p><?php echo htmlspecialchars($religion) ?></p>
         </div>
         </div>
-        <div>
+        <div class="col-md-4">
         <div style="display: flex; gap:10px;">
             <p class="fw-bold">Nationality:</p>
             <p><?php echo htmlspecialchars($nationality) ?></p>
