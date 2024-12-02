@@ -25,6 +25,33 @@
     $course = $studentInfo['Course'] ?? 'Not Specified';
     $section = $studentInfo['Section'] ?? 'Not Specified';
 
+    $result = [];
+    $errors = [];  // Array to hold errors
+
+    $oldPassword = getOldPassword($studentID);
+    
+    if (isset($_POST['changePasswordButton'])) {
+        $oldPassword = $_POST['oldPass'];
+        $newPassword = $_POST['newPass'];
+        
+        // Validate old password (ensure it's correct and not empty)
+        $errors = validatePasswordCredentials($studentID, $oldPassword);  // Validate old password
+        
+        // Check if validation passes
+        if (empty($errors)) {
+            // Check if the new password is not the same as the old password
+            if ($oldPassword === $newPassword) {
+                $errors['password'] = "New password cannot be the same as the old password.";
+            }
+    
+            // If no errors, proceed with the password change
+            if (empty($errors)) {
+                // Proceed to change the password
+                $result = changePassword($studentID, $oldPassword, $newPassword);
+            }
+        }
+    }
+
 ?>
 
 <!DOCTYPE html>
@@ -118,10 +145,13 @@
         </div>
     </div>
     <div class="container d-flex mt-5">
-    <div class="container custom-shadow pt-5 pb-5" style="width: 30%;">
+    <div class="container custom-shadow pt-3 pb-5 ps-4" style="width: 30%;">
+            <p class=" fw-semibold fs-5 text-center">
+                Progress
+            </p>
             <div class="skill ps-5">
-                <div class="outer">
-                    <div class="inner">
+                <div class="outer ps-3">
+                    <div class="inner ps-3">
                         <div id="number">
                             
                         </div>
@@ -234,39 +264,58 @@
         </div>
     </div>
 
-            <div class="modal" tabindex="-1" id="changePassModal">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Change Password</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form action="">
-                                <div>
-                                    <label for="password" class="form-label">Old Password</label>
-                                    <input id="oldPassword" type="password" class="form-control">
-                                    <i class="fa-solid fa-eye position-absolute" style="right: 24px; top: 60px; cursor:pointer" id="toggleOldPassword"></i>
-                                </div>
-                                <div class="pt-4">
-                                    <label for="newpassword" class="form-label">New Password</label>
-                                    <input id="newPassword" type="password" class="form-control">
-                                    <i class="fa-solid fa-eye position-absolute" style="right: 24px; top: 155px; cursor:pointer" id="toggleNewPassword"></i>
-                                </div>
-                                <div class="pt-4">
-                                    <label for="conNewPassword" class="form-label">Confirm New Password</label>
-                                    <input id="conNewPassword" type="password" class="form-control">
-                                    <i class="fa-solid fa-eye position-absolute" style="right: 24px; top: 250px; cursor:pointer" id="toggleConNewPassword"></i>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
-                            <button type="button" class="btn btn-success" data-bs-dismiss="modal">Save</button>
-                        </div>
-                        </div>
-                    </div>
+    <!-- Modal Form to Change Password -->
+<form method="post">
+    <div class="modal" tabindex="-1" id="changePassModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Change Password</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
+                <div class="modal-body">
+                    <?php if (!empty($result)): ?>
+                        <div class="alert <?php echo $result['status'] === 'success' ? 'alert-success' : 'alert-danger'; ?>" role="alert">
+                            <?php echo htmlspecialchars($result['message']); ?>
+                        </div>
+                    <?php endif; ?>
+                    <?php if (!empty($errors)): ?>
+                        <?php echo displayErrors($errors); ?>
+                    <?php else: ?>
+                        <div>
+                            <label for="password" class="form-label">Old Password</label>
+                            <input id="oldPassword" type="password" name="oldPass" class="form-control" required>
+                            <i class="fa-solid fa-eye position-absolute" style="right: 24px; top: 60px; cursor:pointer" id="toggleOldPassword"></i>
+                        </div>
+                        <div class="pt-4">
+                            <label for="newpassword" class="form-label">New Password</label>
+                            <input id="newPassword" type="password" name="newPass" class="form-control" required>
+                            <i class="fa-solid fa-eye position-absolute" style="right: 24px; top: 155px; cursor:pointer" id="toggleNewPassword"></i>
+                        </div>
+                        <div class="pt-4">
+                            <label for="conNewPassword" class="form-label">Confirm New Password</label>
+                            <input id="conNewPassword" type="password" name="confirmPass" class="form-control" required>
+                            <i class="fa-solid fa-eye position-absolute" style="right: 24px; top: 250px; cursor:pointer" id="toggleConNewPassword"></i>
+                        </div>
+                    <?php endif; ?>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-success" name="changePasswordButton">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script>
+    // Ensure the modal is shown if errors exist
+    <?php if (!empty($errors) || !empty($result)): ?>
+        // Trigger the modal to be shown if errors or results are set
+        var myModal = new bootstrap.Modal(document.getElementById('changePassModal'));
+        myModal.show();
+    <?php endif; ?>
+</script>
 
     <script>
        let number = document.getElementById("number");

@@ -406,4 +406,114 @@
         closeCon($con); 
         return $comment;
     }
+
+    function changePassword($studentID, $oldPassword, $newPassword) {
+        $con = openCon();
+        $errorArray = [];  // Initialize error array
+        
+        // Validate password strength (for example, minimum 8 characters, mix of letters and numbers)
+        if (strlen($newPassword) < 8) {
+            $errorArray['password'] = "New password must be at least 8 characters long.";
+        }
+    
+        if (empty($errorArray)) {
+            // Hash the old password to compare it with the database
+            $oldPasswordHashed = $oldPassword;  // Still using MD5 as per the requirement
+            $newPasswordHashed = md5($newPassword);  // MD5 hash for the new password
+    
+            // Prepare query to fetch the user with the old password
+            $stmt = $con->prepare("SELECT password FROM student_users WHERE stud_id = ?");
+            $stmt->bind_param("s", $studentID);
+            $stmt->execute();
+            $stmt->store_result();
+            
+            if ($stmt->num_rows > 0) {
+                $stmt->bind_result($storedPassword);
+                $stmt->fetch();
+                
+                // Compare the hashed old password with the stored one
+                if ($oldPasswordHashed === $storedPassword) {
+                    // Check if the new password is different from the old one
+                    if ($oldPasswordHashed === $newPasswordHashed) {
+                        $errorArray['password'] = "New password cannot be the same as the old password.";
+                    }
+                    
+                    // If no errors, update the password in the database
+                    if (empty($errorArray)) {
+                        $updateStmt = $con->prepare("UPDATE student_users SET password = ? WHERE stud_id = ?");
+                        $updateStmt->bind_param("ss", $newPasswordHashed, $studentID);
+                        
+                        if ($updateStmt->execute()) {
+                            $updateStmt->close();
+                            $stmt->close();
+                            $con->close();
+                            return ['status' => 'success', 'message' => "Password updated successfully."];
+                        } else {
+                            $updateStmt->close();
+                            $stmt->close();
+                            $con->close();
+                            return ['status' => 'error', 'message' => "Error updating password: " . $con->error];
+                        }
+                    }
+                } else {
+                    // Old password is incorrect
+                    $stmt->close();
+                    $con->close();
+                    return ['status' => 'error', 'message' => "Old password does not match our records."];
+                }
+            } else {
+                // No matching user found
+                $stmt->close();
+                $con->close();
+                return ['status' => 'error', 'message' => "No user found with the provided student ID."];
+            }
+        }
+        
+        // Return errors if found
+        $con->close();
+        return ['status' => 'error', 'message' => $errorArray];
+    }
+    
+
+    // Function to validate the old password
+    function validatePasswordCredentials($studentID, $oldPassword) {
+        $errors = [];
+        $storedOldPassword = getOldPassword($studentID);  // Get the current hashed password from the database
+
+        // Check if the old password matches the stored password (MD5 hash)
+        if (md5($oldPassword) !== $storedOldPassword) {
+            $errors['oldPassword'] = "Incorrect old password.";
+        }
+
+        return $errors;
+    }
+
+    function getOldPassword($studentID) {
+        // Open the database connection
+        $con = openCon();
+    
+        // Prepare the query to fetch the user's old password
+        $stmt = $con->prepare("SELECT password FROM student_users WHERE stud_id = ?");
+        $stmt->bind_param("s", $studentID);  // Bind the studentID parameter
+        $stmt->execute();
+        $result = $stmt->get_result();
+    
+        // Check if a user with the provided studentID exists
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $oldPassword = $row['password'];  // Get the old password
+        } else {
+            $oldPassword = null;  // Return null if the student ID doesn't exist
+        }
+    
+        // Close the prepared statement and the database connection
+        $stmt->close();
+        $con->close();
+    
+        return $oldPassword;
+    }
+    
+    
+    
+
 ?>
