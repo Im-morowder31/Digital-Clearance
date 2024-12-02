@@ -11,10 +11,21 @@ header{
     animation-duration: 1s;
 }
 
+.sidebar-shadow{
+    box-shadow: 2px 0px 6px #D9D9D9;
+    animation-name: slideRight;
+    animation-duration: 1s;
+}
+
 .custom-info {
     width: 70%;
     
 }
+
+@keyframes slideRight {
+    from{transform:translateX(-100%) ;}
+}
+
 
 table{
     animation-name: slideLeft;

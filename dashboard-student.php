@@ -44,12 +44,26 @@
         <div class="head">
             <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-10 text-white " href="#"><?php echo $_SESSION['user_name'] . " - Dashboard"; ?></a>
         </div>
-        <div class=" me-5 ">
-            <a href="logout.php" class="text-light">               
-                <i class="fa-solid fa-right-from-bracket fs-5 p-1">Logout</i>               
-            </a>
-        </div>
     </header>
+
+    <div class="sidebar">
+        <div class="container position-fixed start-0 sidebar-shadow" style="height: 100vh; width:250px;">
+            <div class="d-flex pt-5 ps-3 text-center">
+                <i class="fa-solid fa-unlock"></i>
+                <a href="" class="text-decoration-none ps-2" data-bs-toggle="modal" data-bs-target="#changePassModal">
+                    <p  class="text-dark fw-semibold">Change Password</p>
+                </a>
+            </div>
+            <br>
+            <hr>
+            <div class="ps-3 pt-3">
+            <a href="logout.php" class="text-danger">               
+                <i class="fa-solid fa-right-from-bracket">Logout</i>               
+            </a>
+            
+        </div>
+        </div>
+    </div>
 
     <div class="container pt-3 ps-5 mt-4 custom-shadow position-relative">
         <p class="" style="font-size: 40px;">
@@ -220,6 +234,40 @@
         </div>
     </div>
 
+            <div class="modal" tabindex="-1" id="changePassModal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Change Password</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="">
+                                <div>
+                                    <label for="password" class="form-label">Old Password</label>
+                                    <input id="oldPassword" type="password" class="form-control">
+                                    <i class="fa-solid fa-eye position-absolute" style="right: 24px; top: 60px; cursor:pointer" id="toggleOldPassword"></i>
+                                </div>
+                                <div class="pt-4">
+                                    <label for="newpassword" class="form-label">New Password</label>
+                                    <input id="newPassword" type="password" class="form-control">
+                                    <i class="fa-solid fa-eye position-absolute" style="right: 24px; top: 155px; cursor:pointer" id="toggleNewPassword"></i>
+                                </div>
+                                <div class="pt-4">
+                                    <label for="conNewPassword" class="form-label">Confirm New Password</label>
+                                    <input id="conNewPassword" type="password" class="form-control">
+                                    <i class="fa-solid fa-eye position-absolute" style="right: 24px; top: 250px; cursor:pointer" id="toggleConNewPassword"></i>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-success" data-bs-dismiss="modal">Save</button>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+
     <script>
        let number = document.getElementById("number");
         let progressCircle = document.getElementById("progress-circle");
@@ -246,6 +294,26 @@
                 progressCircle.style.strokeDashoffset = dashOffset; // Apply the new offset
             }
         }, 30); // Adjust the speed of animation
+
+
+        // Add toggle functionality for each field
+            document.getElementById('toggleOldPassword').addEventListener('click', () => togglePassword('oldPassword', 'toggleOldPassword'));
+            document.getElementById('toggleNewPassword').addEventListener('click', () => togglePassword('newPassword', 'toggleNewPassword'));
+            document.getElementById('toggleConNewPassword').addEventListener('click', () => togglePassword('conNewPassword', 'toggleConNewPassword'));
+
+            // Reusable function for toggling password visibility
+            function togglePassword(inputId, iconId) {
+                const passwordInput = document.getElementById(inputId);
+                const toggleIcon = document.getElementById(iconId);
+
+                // Toggle input type
+                const isPassword = passwordInput.type === 'password';
+                passwordInput.type = isPassword ? 'text' : 'password';
+
+                // Toggle icon class
+                toggleIcon.classList.toggle('fa-eye');
+                toggleIcon.classList.toggle('fa-eye-slash');
+            }
 
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
