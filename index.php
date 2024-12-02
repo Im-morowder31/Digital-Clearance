@@ -103,8 +103,9 @@
                 <span class="icon">
                     <ion-icon name="lock-closed"></ion-icon>
                 </span>
-                <input type="password" placeholder=" " name="password" value="<?php echo isset($password) ? $password : ''; ?>" required>
+                <input id="password" type="password" placeholder=" " name="password" value="<?php echo isset($password) ? $password : ''; ?>" required>
                 <label>Password</label>
+                <i class="fa-solid fa-eye position-absolute" style="right: 10px; top: 16px; cursor:pointer" id="togglePassword"></i>
             </div>
 
                 <div class="login-select">
@@ -121,6 +122,20 @@
             </form>
         </div>
     </div>
+    <script>
+        const togglePassword = document.getElementById('togglePassword');
+    const passwordInput = document.getElementById('password');
+
+    togglePassword.addEventListener('click', () => {
+        // Toggle the type attribute between 'password' and 'text'
+        const isPassword = passwordInput.type === 'password';
+        passwordInput.type = isPassword ? 'text' : 'password';
+
+        // Toggle the icon class between 'fa-eye' and 'fa-eye-slash'
+        togglePassword.classList.toggle('fa-eye');
+        togglePassword.classList.toggle('fa-eye-slash');
+    });
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
